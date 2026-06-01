@@ -3,6 +3,8 @@
 // @namespace    https://meta.intra.42.fr/
 // @version      2.1
 // @description  42 경산 c1/c2 클러스터 실시간 배치도 — 우측 하단 버튼
+// @updateURL    https://raw.githubusercontent.com/gytjr8422/clusters/main/42gyeongsan-cluster.user.js
+// @downloadURL  https://raw.githubusercontent.com/gytjr8422/clusters/main/42gyeongsan-cluster.user.js
 // @match        https://profile-v3.intra.42.fr/*
 // @grant        GM_xmlhttpRequest
 // @connect      meta.intra.42.fr
