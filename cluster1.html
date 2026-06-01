@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>42 경산 — Cluster 1 배치도</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    h1 {
+      color: #ccc;
+      margin-bottom: 20px;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+    #map-container {
+      position: relative;
+    }
+    #cluster-svg {
+      width: 800px;
+      height: 800px;
+      border-radius: 10px;
+      display: block;
+    }
+    #tooltip {
+      position: fixed;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 10px;
+      padding: 14px;
+      display: none;
+      z-index: 1000;
+      text-align: center;
+      min-width: 130px;
+      pointer-events: none;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+    }
+    #tooltip img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 8px;
+      object-fit: cover;
+      border: 2px solid #00babc;
+      background: #333;
+    }
+    #tooltip img.hidden { display: none; }
+    #tooltip .t-login {
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    #controls {
+      margin-top: 16px;
+      width: 800px;
+    }
+    #controls label {
+      color: #aaa;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    #controls textarea {
+      width: 100%;
+      height: 110px;
+      background: #1e1e1e;
+      color: #ccc;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 12px;
+      font-family: monospace;
+      resize: vertical;
+      outline: none;
+    }
+    #controls textarea:focus { border-color: #00babc; }
+    .btn-row { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+    .btn {
+      padding: 7px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .btn-apply { background: #00babc; color: #fff; }
+    .btn-apply:hover { background: #009fa1; }
+    .btn-clear { background: #444; color: #ccc; }
+    .btn-clear:hover { background: #555; }
+    #status { font-size: 12px; margin-left: 4px; }
+    .status-ok { color: #4caf50; }
+    .status-err { color: #f44336; }
+    #legend {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      align-items: center;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; color: #888; font-size: 12px; }
+    .legend-box {
+      width: 14px; height: 14px; border-radius: 3px;
+      border: 1px solid #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>42 경산 — Cluster 1 배치도</h1>
+
+  <div id="map-container">
+    <svg id="cluster-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 800">
+      <rect width="800" height="800" fill="#1a1a1a" rx="10"/>
+
+      <!-- R2 -->
+      <rect id="c1r2s6" height="20" width="16" y="276" x="621" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="308" x="624.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r2s5" height="20" width="16" y="292" x="637" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="324" x="640.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r2s4" height="20" width="16" y="276" x="653" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="308" x="656.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r2s3" height="20" width="16" y="292" x="669" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="324" x="672.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r2s2" height="20" width="16" y="276" x="685" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="308" x="688.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r2s1" height="20" width="16" y="292" x="701" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="324" x="704.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="717" y="302" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R2</text>
+
+      <!-- R1 -->
+      <rect id="c1r1s6" height="20" width="16" y="336" x="621" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="368" x="624.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r1s5" height="20" width="16" y="352" x="637" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="384" x="640.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r1s4" height="20" width="16" y="336" x="653" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="368" x="656.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r1s3" height="20" width="16" y="352" x="669" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="384" x="672.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r1s2" height="20" width="16" y="336" x="685" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="368" x="688.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r1s1" height="20" width="16" y="352" x="701" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="384" x="704.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="717" y="362" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R1</text>
+
+      <!-- R4 -->
+      <rect id="c1r4s8" height="20" width="16" y="276" x="426" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="308" x="429.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">8</text>
+      <rect id="c1r4s7" height="20" width="16" y="292" x="442" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="324" x="445.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">7</text>
+      <rect id="c1r4s6" height="20" width="16" y="276" x="458" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="308" x="461.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r4s5" height="20" width="16" y="292" x="474" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="324" x="477.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r4s4" height="20" width="16" y="276" x="490" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="308" x="493.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r4s3" height="20" width="16" y="292" x="506" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="324" x="509.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r4s2" height="20" width="16" y="276" x="522" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="308" x="525.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r4s1" height="20" width="16" y="292" x="538" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="324" x="541.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="554" y="302" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R4</text>
+
+      <!-- R3 -->
+      <rect id="c1r3s8" height="20" width="16" y="336" x="426" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="368" x="429.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">8</text>
+      <rect id="c1r3s7" height="20" width="16" y="352" x="442" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="384" x="445.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">7</text>
+      <rect id="c1r3s6" height="20" width="16" y="336" x="458" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="368" x="461.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r3s5" height="20" width="16" y="352" x="474" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="384" x="477.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r3s4" height="20" width="16" y="336" x="490" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="368" x="493.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r3s3" height="20" width="16" y="352" x="506" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="384" x="509.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r3s2" height="20" width="16" y="336" x="522" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="368" x="525.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r3s1" height="20" width="16" y="352" x="538" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="384" x="541.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="554" y="362" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R3</text>
+
+      <!-- R8 -->
+      <rect id="c1r8s6" height="20" width="16" y="34" x="426" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="66" x="429.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r8s5" height="20" width="16" y="50" x="442" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="82" x="445.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r8s4" height="20" width="16" y="34" x="458" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="66" x="461.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r8s3" height="20" width="16" y="50" x="474" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="82" x="477.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r8s2" height="20" width="16" y="34" x="490" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="66" x="493.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r8s1" height="20" width="16" y="50" x="506" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="82" x="509.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="522" y="60" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R8</text>
+
+      <!-- R7 -->
+      <rect id="c1r7s6" height="20" width="16" y="94" x="426" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="126" x="429.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r7s5" height="20" width="16" y="110" x="442" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="142" x="445.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r7s4" height="20" width="16" y="94" x="458" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="126" x="461.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r7s3" height="20" width="16" y="110" x="474" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="142" x="477.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r7s2" height="20" width="16" y="94" x="490" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="126" x="493.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r7s1" height="20" width="16" y="110" x="506" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="142" x="509.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="522" y="120" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R7</text>
+
+      <!-- R6 -->
+      <rect id="c1r6s6" height="20" width="16" y="154" x="426" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="429.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r6s5" height="20" width="16" y="170" x="442" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="445.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r6s4" height="20" width="16" y="154" x="458" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="461.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r6s3" height="20" width="16" y="170" x="474" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="477.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r6s2" height="20" width="16" y="154" x="490" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="493.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r6s1" height="20" width="16" y="170" x="506" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="509.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="522" y="180" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R6</text>
+
+      <!-- R5 -->
+      <rect id="c1r5s6" height="20" width="16" y="214" x="426" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="429.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r5s5" height="20" width="16" y="230" x="442" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="445.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r5s4" height="20" width="16" y="214" x="458" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="461.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r5s3" height="20" width="16" y="230" x="474" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="477.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r5s2" height="20" width="16" y="214" x="490" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="493.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r5s1" height="20" width="16" y="230" x="506" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="509.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="522" y="240" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R5</text>
+
+      <!-- R12 -->
+      <rect id="c1r12s6" height="20" width="16" y="154" x="251" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="254.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r12s5" height="20" width="16" y="170" x="267" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="270.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r12s4" height="20" width="16" y="154" x="283" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="286.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r12s3" height="20" width="16" y="170" x="299" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="302.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r12s2" height="20" width="16" y="154" x="315" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="318.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r12s1" height="20" width="16" y="170" x="331" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="334.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="347" y="180" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R12</text>
+
+      <!-- R11 -->
+      <rect id="c1r11s6" height="20" width="16" y="214" x="251" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="254.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r11s5" height="20" width="16" y="230" x="267" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="270.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r11s4" height="20" width="16" y="214" x="283" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="286.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r11s3" height="20" width="16" y="230" x="299" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="302.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r11s2" height="20" width="16" y="214" x="315" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="318.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r11s1" height="20" width="16" y="230" x="331" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="334.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="347" y="240" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R11</text>
+
+      <!-- R10 -->
+      <rect id="c1r10s6" height="20" width="16" y="274" x="251" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="306" x="254.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r10s5" height="20" width="16" y="290" x="267" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="322" x="270.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r10s4" height="20" width="16" y="274" x="283" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="306" x="286.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r10s3" height="20" width="16" y="290" x="299" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="322" x="302.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r10s2" height="20" width="16" y="274" x="315" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="306" x="318.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r10s1" height="20" width="16" y="290" x="331" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="322" x="334.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="347" y="300" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R10</text>
+
+      <!-- R9 -->
+      <rect id="c1r9s6" height="20" width="16" y="334" x="251" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="366" x="254.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r9s5" height="20" width="16" y="350" x="267" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="382" x="270.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r9s4" height="20" width="16" y="334" x="283" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="366" x="286.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r9s3" height="20" width="16" y="350" x="299" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="382" x="302.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r9s2" height="20" width="16" y="334" x="315" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="366" x="318.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r9s1" height="20" width="16" y="350" x="331" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="382" x="334.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="347" y="360" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R9</text>
+
+      <!-- R19 -->
+      <rect id="c1r19s4" height="20" width="16" y="394" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="426" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r19s3" height="20" width="16" y="410" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="442" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r19s2" height="20" width="16" y="394" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="426" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r19s1" height="20" width="16" y="410" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="442" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="100" y="420" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R19</text>
+
+      <!-- R18 -->
+      <rect id="c1r18s4" height="20" width="16" y="454" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="486" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r18s3" height="20" width="16" y="470" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="502" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r18s2" height="20" width="16" y="454" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="486" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r18s1" height="20" width="16" y="470" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="502" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="100" y="480" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R18</text>
+
+      <!-- R17 -->
+      <rect id="c1r17s4" height="20" width="16" y="514" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="546" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r17s3" height="20" width="16" y="530" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="562" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r17s2" height="20" width="16" y="514" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="546" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r17s1" height="20" width="16" y="530" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="562" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="100" y="540" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R17</text>
+
+      <!-- R16 -->
+      <rect id="c1r16s4" height="20" width="16" y="574" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="606" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r16s3" height="20" width="16" y="590" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="622" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r16s2" height="20" width="16" y="574" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="606" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r16s1" height="20" width="16" y="590" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="622" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="100" y="600" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R16</text>
+
+      <!-- R15 -->
+      <rect id="c1r15s4" height="20" width="16" y="634" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="666" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r15s3" height="20" width="16" y="650" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="682" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r15s2" height="20" width="16" y="634" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="666" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r15s1" height="20" width="16" y="650" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="682" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="100" y="660" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R15</text>
+
+      <!-- R14 -->
+      <rect id="c1r14s4" height="20" width="16" y="694" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="726" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r14s3" height="20" width="16" y="710" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="742" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r14s2" height="20" width="16" y="694" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="726" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r14s1" height="20" width="16" y="710" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="742" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="100" y="720" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R14</text>
+
+      <!-- R13 -->
+      <rect id="c1r13s4" height="20" width="16" y="754" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="786" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r13s3" height="20" width="16" y="770" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="802" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r13s2" height="20" width="16" y="754" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="786" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r13s1" height="20" width="16" y="770" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="802" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="100" y="780" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R13</text>
+
+      <!-- R23 -->
+      <rect id="c1r23s8" height="20" width="16" y="154" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">8</text>
+      <rect id="c1r23s7" height="20" width="16" y="170" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">7</text>
+      <rect id="c1r23s6" height="20" width="16" y="154" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r23s5" height="20" width="16" y="170" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r23s4" height="20" width="16" y="154" x="100" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="103.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r23s3" height="20" width="16" y="170" x="116" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="119.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r23s2" height="20" width="16" y="154" x="132" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="186" x="135.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r23s1" height="20" width="16" y="170" x="148" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="202" x="151.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="164" y="180" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R23</text>
+
+      <!-- R22 -->
+      <rect id="c1r22s8" height="20" width="16" y="214" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">8</text>
+      <rect id="c1r22s7" height="20" width="16" y="230" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">7</text>
+      <rect id="c1r22s6" height="20" width="16" y="214" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r22s5" height="20" width="16" y="230" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r22s4" height="20" width="16" y="214" x="100" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="103.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r22s3" height="20" width="16" y="230" x="116" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="119.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r22s2" height="20" width="16" y="214" x="132" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="246" x="135.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r22s1" height="20" width="16" y="230" x="148" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="262" x="151.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="164" y="240" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R22</text>
+
+      <!-- R21 -->
+      <rect id="c1r21s8" height="20" width="16" y="274" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="306" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">8</text>
+      <rect id="c1r21s7" height="20" width="16" y="290" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="322" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">7</text>
+      <rect id="c1r21s6" height="20" width="16" y="274" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="306" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r21s5" height="20" width="16" y="290" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="322" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r21s4" height="20" width="16" y="274" x="100" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="306" x="103.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r21s3" height="20" width="16" y="290" x="116" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="322" x="119.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r21s2" height="20" width="16" y="274" x="132" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="306" x="135.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r21s1" height="20" width="16" y="290" x="148" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="322" x="151.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="164" y="300" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R21</text>
+
+      <!-- R20 -->
+      <rect id="c1r20s8" height="20" width="16" y="334" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="366" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">8</text>
+      <rect id="c1r20s7" height="20" width="16" y="350" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="382" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">7</text>
+      <rect id="c1r20s6" height="20" width="16" y="334" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="366" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r20s5" height="20" width="16" y="350" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="382" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r20s4" height="20" width="16" y="334" x="100" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="366" x="103.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r20s3" height="20" width="16" y="350" x="116" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="382" x="119.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r20s2" height="20" width="16" y="334" x="132" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="366" x="135.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r20s1" height="20" width="16" y="350" x="148" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="382" x="151.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="164" y="360" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R20</text>
+
+      <!-- R24 -->
+      <rect id="c1r24s6" height="20" width="16" y="99" x="36" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="131" x="39.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">6</text>
+      <rect id="c1r24s5" height="20" width="16" y="115" x="52" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="147" x="55.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">5</text>
+      <rect id="c1r24s4" height="20" width="16" y="99" x="68" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="131" x="71.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">4</text>
+      <rect id="c1r24s3" height="20" width="16" y="115" x="84" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="147" x="87.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">3</text>
+      <rect id="c1r24s2" height="20" width="16" y="99" x="100" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="131" x="103.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">2</text>
+      <rect id="c1r24s1" height="20" width="16" y="115" x="116" stroke="#7f7f7f" fill="#e5e5e5"/>
+      <text y="147" x="119.2" xml:space="preserve" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#b2b2b2">1</text>
+      <text fill="#cccccc" x="132" y="125" font-size="20" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">R24</text>
+
+      <!-- c1 label -->
+      <text fill="#cccccc" x="250" y="500" font-size="40" font-family="Helvetica, Arial, sans-serif" xml:space="preserve" font-weight="bold">
+        <tspan dx="5">c1</tspan>
+      </text>
+    </svg>
+
+    <div id="tooltip">
+      <img id="tooltip-img" src="" alt="profile">
+      <div class="t-login" id="tooltip-login"></div>
+    </div>
+  </div>
+
+  <div id="controls">
+    <label>
+      JSON 데이터 붙여넣기
+      <span style="color:#666;font-size:11px;margin-left:8px;">형식: {"c1r1s1": {"login": "jdoe", "image": "https://..."}, ...}</span>
+    </label>
+    <textarea id="json-input" placeholder='{
+  "c1r5s3": { "login": "hskim", "image": "https://cdn.intra.42.fr/users/..." },
+  "c1r7s1": { "login": "peer42", "image": "" }
+}'></textarea>
+    <div class="btn-row">
+      <button class="btn btn-apply" onclick="applyJSON()">적용</button>
+      <button class="btn btn-clear" onclick="clearSeats()">초기화</button>
+      <span id="status"></span>
+    </div>
+
+    <div id="legend">
+      <div class="legend-item">
+        <div class="legend-box" style="background:#e5e5e5;"></div>
+        빈 자리
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background:#00babc;border-color:#009fa1;"></div>
+        사용 중
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const OCCUPIED_COLOR = '#00babc';
+    const EMPTY_COLOR = '#e5e5e5';
+
+    function loadSeats(json) {
+      clearSeats(false);
+      let count = 0;
+      for (const [seatId, user] of Object.entries(json)) {
+        const rect = document.getElementById(seatId);
+        if (!rect) continue;
+        rect.setAttribute('fill', OCCUPIED_COLOR);
+        rect.dataset.login = user.login || '';
+        rect.dataset.image = user.image || '';
+        count++;
+      }
+      return count;
+    }
+
+    function clearSeats(resetStatus = true) {
+      document.querySelectorAll('rect[id^="c1r"]').forEach(rect => {
+        rect.setAttribute('fill', EMPTY_COLOR);
+        delete rect.dataset.login;
+        delete rect.dataset.image;
+      });
+      if (resetStatus) setStatus('', '');
+    }
+
+    function applyJSON() {
+      const raw = document.getElementById('json-input').value.trim();
+      if (!raw) { setStatus('JSON을 입력하세요.', 'err'); return; }
+      try {
+        const data = JSON.parse(raw);
+        const count = loadSeats(data);
+        setStatus(`${count}개 자리 적용됨.`, 'ok');
+      } catch (e) {
+        setStatus('JSON 파싱 오류: ' + e.message, 'err');
+      }
+    }
+
+    function setStatus(msg, type) {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = type === 'ok' ? 'status-ok' : type === 'err' ? 'status-err' : '';
+    }
+
+    // Tooltip
+    const tooltip = document.getElementById('tooltip');
+    const tooltipImg = document.getElementById('tooltip-img');
+    const tooltipLogin = document.getElementById('tooltip-login');
+
+    document.addEventListener('mousemove', e => {
+      if (tooltip.style.display !== 'block') return;
+      let x = e.clientX + 16;
+      let y = e.clientY - 90;
+      if (x + 160 > window.innerWidth) x = e.clientX - 160;
+      if (y < 8) y = e.clientY + 16;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = y + 'px';
+    });
+
+    document.querySelectorAll('rect[id^="c1r"]').forEach(rect => {
+      rect.addEventListener('mouseenter', () => {
+        const login = rect.dataset.login;
+        if (!login) return;
+        const img = rect.dataset.image;
+        tooltipImg.src = img || '';
+        tooltipImg.style.display = img ? 'block' : 'none';
+        tooltipLogin.textContent = login;
+        tooltip.style.display = 'block';
+      });
+      rect.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
