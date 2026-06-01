@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         42 경산 클러스터 지도
 // @namespace    https://meta.intra.42.fr/
-// @version      1.6
+// @version      2.1
 // @description  42 경산 c1/c2 클러스터 실시간 배치도 — 우측 하단 버튼
 // @match        https://profile-v3.intra.42.fr/*
 // @grant        GM_xmlhttpRequest
@@ -46,7 +46,7 @@
     }
     #c42-panel h2 {
       color: #ccc; font-family: Helvetica, Arial, sans-serif;
-      font-size: 17px; margin: 0; letter-spacing: .5px;
+      font-size: 21px; margin: 0; letter-spacing: .5px;
     }
     #c42-close {
       position: absolute; top: 14px; right: 16px;
@@ -56,11 +56,12 @@
     #c42-close:hover { color: #fff; }
 
     #c42-tabs {
-      display: flex; gap: 6px; margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
     }
+    #c42-tab-left { display: flex; gap: 6px; }
     .c42-tab {
       background: #2a2a2a; border: 1px solid #444; color: #888;
-      border-radius: 6px; padding: 4px 16px; font-size: 13px;
+      border-radius: 6px; padding: 5px 20px; font-size: 16px;
       font-weight: bold; cursor: pointer; font-family: Helvetica, Arial, sans-serif;
       transition: all .15s;
     }
@@ -68,16 +69,28 @@
     .c42-tab.active { background: #00babc; border-color: #00babc; color: #fff; }
 
     #c42-status {
-      color: #666; font-size: 12px;
+      color: #666; font-size: 15px;
       font-family: Helvetica, Arial, sans-serif;
       margin-bottom: 10px;
     }
     #c42-refresh {
       background: none; border: 1px solid #444; color: #aaa;
-      border-radius: 4px; padding: 2px 8px; font-size: 11px;
+      border-radius: 4px; padding: 2px 10px; font-size: 13px;
       cursor: pointer; margin-left: 8px;
     }
     #c42-refresh:hover { border-color: #00babc; color: #00babc; }
+
+    #c42-default-bar {
+      display: flex; align-items: center; gap: 6px;
+      font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: #666;
+    }
+    .c42-default-btn {
+      background: #2a2a2a; border: 1px solid #444; color: #666;
+      border-radius: 4px; padding: 3px 10px; font-size: 14px;
+      cursor: pointer; transition: all .15s;
+    }
+    .c42-default-btn:hover { border-color: #00babc; color: #ccc; }
+    .c42-default-btn.active { background: #00babc22; border-color: #00babc; color: #00babc; font-weight: bold; }
 
     .c42-svg-wrap { display: none; }
     .c42-svg-wrap.active { display: block; }
@@ -101,11 +114,11 @@
     .c42-seat-img { cursor: pointer; }
 
     #c42-legend {
-      display: flex; gap: 14px; margin-top: 10px;
-      font-family: Helvetica, Arial, sans-serif; font-size: 11px; color: #666;
+      display: flex; gap: 16px; margin-bottom: 10px;
+      font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: #666;
     }
-    .c42-leg { display: flex; align-items: center; gap: 5px; }
-    .c42-dot { width: 12px; height: 12px; border-radius: 2px; border: 1px solid #555; }
+    .c42-leg { display: flex; align-items: center; gap: 6px; }
+    .c42-dot { width: 14px; height: 14px; border-radius: 3px; border: 1px solid #555; }
   `;
   document.head.appendChild(style);
 
@@ -745,16 +758,23 @@
         <h2>42 경산 클러스터 배치도</h2>
       </div>
       <div id="c42-tabs">
-        <button class="c42-tab active" data-cluster="c1">c1</button>
-        <button class="c42-tab" data-cluster="c2">c2</button>
+        <div id="c42-tab-left">
+          <button class="c42-tab active" data-cluster="c1">c1</button>
+          <button class="c42-tab" data-cluster="c2">c2</button>
+        </div>
+        <div id="c42-default-bar">
+          기본
+          <button class="c42-default-btn active" data-cluster="c1">c1</button>
+          <button class="c42-default-btn" data-cluster="c2">c2</button>
+        </div>
       </div>
       <div id="c42-status">불러오는 중…</div>
-      <div class="c42-svg-wrap active" data-cluster="c1">${svgC1}</div>
-      <div class="c42-svg-wrap" data-cluster="c2">${svgC2}</div>
       <div id="c42-legend">
         <div class="c42-leg"><div class="c42-dot" style="background:#e5e5e5"></div>빈 자리</div>
         <div class="c42-leg"><div class="c42-dot" style="background:#00babc;border-color:#009fa1"></div>사용 중</div>
       </div>
+      <div class="c42-svg-wrap active" data-cluster="c1">${svgC1}</div>
+      <div class="c42-svg-wrap" data-cluster="c2">${svgC2}</div>
     </div>`;
   document.body.appendChild(overlay);
 
@@ -786,15 +806,31 @@
   });
 
   /* ── 탭 전환 ── */
+  function switchTab(cluster) {
+    overlay.querySelectorAll('.c42-tab').forEach(t => t.classList.toggle('active', t.dataset.cluster === cluster));
+    overlay.querySelectorAll('.c42-svg-wrap').forEach(w => w.classList.toggle('active', w.dataset.cluster === cluster));
+    hideTip();
+  }
+
   overlay.querySelectorAll('.c42-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      overlay.querySelectorAll('.c42-tab').forEach(t => t.classList.remove('active'));
-      overlay.querySelectorAll('.c42-svg-wrap').forEach(w => w.classList.remove('active'));
-      tab.classList.add('active');
-      overlay.querySelector(`.c42-svg-wrap[data-cluster="${tab.dataset.cluster}"]`).classList.add('active');
-      hideTip();
+    tab.addEventListener('click', () => switchTab(tab.dataset.cluster));
+  });
+
+  /* ── 기본 클러스터 설정 ── */
+  function updateDefaultBtns(cluster) {
+    overlay.querySelectorAll('.c42-default-btn').forEach(b => b.classList.toggle('active', b.dataset.cluster === cluster));
+  }
+
+  overlay.querySelectorAll('.c42-default-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      localStorage.setItem('c42-default-cluster', btn.dataset.cluster);
+      updateDefaultBtns(btn.dataset.cluster);
     });
   });
+
+  const savedCluster = localStorage.getItem('c42-default-cluster') || 'c1';
+  updateDefaultBtns(savedCluster);
+  if (savedCluster === 'c2') switchTab('c2');
 
   /* ── SVG 이미지 주입 / 제거 ── */
   function clearSeatImages() {
@@ -880,6 +916,7 @@
 
   /* ── 버튼 이벤트 ── */
   btn.addEventListener('click', () => {
+    switchTab(localStorage.getItem('c42-default-cluster') || 'c1');
     overlay.classList.add('open');
     loadCluster();
   });
