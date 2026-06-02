@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         42 경산 클러스터 지도
 // @namespace    https://meta.intra.42.fr/
-// @version      2.3
+// @version      2.4
 // @description  42 경산 c1/c2/c3 클러스터 실시간 배치도 — 우측 하단 버튼
 // @updateURL    https://raw.githubusercontent.com/gytjr8422/clusters/main/42gyeongsan-cluster.user.js
 // @downloadURL  https://raw.githubusercontent.com/gytjr8422/clusters/main/42gyeongsan-cluster.user.js
@@ -1069,7 +1069,7 @@
   const btn = document.createElement('button');
   btn.id = 'c42-btn';
   btn.title = '클러스터 지도 열기';
-  btn.textContent = '🗺';
+  btn.textContent = '🖥';
   document.body.appendChild(btn);
 
   const tooltip = document.createElement('div');
