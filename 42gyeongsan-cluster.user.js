@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         42 경산 클러스터 지도
 // @namespace    https://meta.intra.42.fr/
-// @version      2.1
-// @description  42 경산 c1/c2 클러스터 실시간 배치도 — 우측 하단 버튼
+// @version      2.3
+// @description  42 경산 c1/c2/c3 클러스터 실시간 배치도 — 우측 하단 버튼
 // @updateURL    https://raw.githubusercontent.com/gytjr8422/clusters/main/42gyeongsan-cluster.user.js
 // @downloadURL  https://raw.githubusercontent.com/gytjr8422/clusters/main/42gyeongsan-cluster.user.js
 // @match        https://profile-v3.intra.42.fr/*
@@ -750,6 +750,289 @@
   <text fill="#cccccc" x="250" y="500" font-size="40" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">c2</tspan></text>
 </svg>`;
 
+  /* ── SVG: c3 ── */
+  const svgC3 = `
+<svg id="c42-svg-c3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" style="display:block;width:min(2400px,95vw);height:auto">
+  <rect width="800" height="800" fill="#1a1a1a" rx="10"/>
+  <!-- R5 -->
+  <rect id="c3r5s6" height="20" width="16" y="34" x="546" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="549.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r5s5" height="20" width="16" y="50" x="562" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="565.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r5s4" height="20" width="16" y="34" x="578" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="581.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r5s3" height="20" width="16" y="50" x="594" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="597.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r5s2" height="20" width="16" y="34" x="610" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="613.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r5s1" height="20" width="16" y="50" x="626" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="629.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="642" y="60" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R5</tspan></text>
+  <!-- R4 -->
+  <rect id="c3r4s6" height="20" width="16" y="94" x="546" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="549.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r4s5" height="20" width="16" y="110" x="562" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="565.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r4s4" height="20" width="16" y="94" x="578" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="581.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r4s3" height="20" width="16" y="110" x="594" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="597.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r4s2" height="20" width="16" y="94" x="610" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="613.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r4s1" height="20" width="16" y="110" x="626" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="629.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="642" y="120" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R4</tspan></text>
+  <!-- R3 -->
+  <rect id="c3r3s6" height="20" width="16" y="154" x="546" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="549.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r3s5" height="20" width="16" y="170" x="562" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="565.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r3s4" height="20" width="16" y="154" x="578" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="581.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r3s3" height="20" width="16" y="170" x="594" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="597.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r3s2" height="20" width="16" y="154" x="610" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="613.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r3s1" height="20" width="16" y="170" x="626" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="629.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="642" y="180" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R3</tspan></text>
+  <!-- R2 -->
+  <rect id="c3r2s6" height="20" width="16" y="214" x="546" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="549.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r2s5" height="20" width="16" y="230" x="562" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="565.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r2s4" height="20" width="16" y="214" x="578" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="581.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r2s3" height="20" width="16" y="230" x="594" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="597.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r2s2" height="20" width="16" y="214" x="610" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="613.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r2s1" height="20" width="16" y="230" x="626" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="629.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="642" y="240" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R2</tspan></text>
+  <!-- R1 -->
+  <rect id="c3r1s6" height="20" width="16" y="274" x="546" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="549.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r1s5" height="20" width="16" y="290" x="562" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="565.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r1s4" height="20" width="16" y="274" x="578" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="581.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r1s3" height="20" width="16" y="290" x="594" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="597.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r1s2" height="20" width="16" y="274" x="610" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="613.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r1s1" height="20" width="16" y="290" x="626" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="629.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="642" y="300" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R1</tspan></text>
+  <!-- R10 -->
+  <rect id="c3r10s6" height="20" width="16" y="34" x="376" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="379.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r10s5" height="20" width="16" y="50" x="392" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="395.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r10s4" height="20" width="16" y="34" x="408" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="411.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r10s3" height="20" width="16" y="50" x="424" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="427.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r10s2" height="20" width="16" y="34" x="440" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="443.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r10s1" height="20" width="16" y="50" x="456" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="459.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="472" y="60" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R10</tspan></text>
+  <!-- R9 -->
+  <rect id="c3r9s6" height="20" width="16" y="94" x="376" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="379.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r9s5" height="20" width="16" y="110" x="392" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="395.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r9s4" height="20" width="16" y="94" x="408" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="411.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r9s3" height="20" width="16" y="110" x="424" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="427.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r9s2" height="20" width="16" y="94" x="440" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="443.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r9s1" height="20" width="16" y="110" x="456" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="459.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="472" y="120" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R9</tspan></text>
+  <!-- R8 -->
+  <rect id="c3r8s6" height="20" width="16" y="154" x="376" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="379.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r8s5" height="20" width="16" y="170" x="392" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="395.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r8s4" height="20" width="16" y="154" x="408" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="411.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r8s3" height="20" width="16" y="170" x="424" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="427.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r8s2" height="20" width="16" y="154" x="440" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="443.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r8s1" height="20" width="16" y="170" x="456" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="459.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="472" y="180" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R8</tspan></text>
+  <!-- R7 -->
+  <rect id="c3r7s6" height="20" width="16" y="214" x="376" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="379.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r7s5" height="20" width="16" y="230" x="392" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="395.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r7s4" height="20" width="16" y="214" x="408" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="411.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r7s3" height="20" width="16" y="230" x="424" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="427.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r7s2" height="20" width="16" y="214" x="440" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="443.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r7s1" height="20" width="16" y="230" x="456" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="459.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="472" y="240" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R7</tspan></text>
+  <!-- R6 -->
+  <rect id="c3r6s6" height="20" width="16" y="274" x="376" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="379.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r6s5" height="20" width="16" y="290" x="392" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="395.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r6s4" height="20" width="16" y="274" x="408" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="411.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r6s3" height="20" width="16" y="290" x="424" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="427.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r6s2" height="20" width="16" y="274" x="440" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="443.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r6s1" height="20" width="16" y="290" x="456" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="459.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="472" y="300" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R6</tspan></text>
+  <!-- R15 -->
+  <rect id="c3r15s6" height="20" width="16" y="34" x="206" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="209.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r15s5" height="20" width="16" y="50" x="222" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="225.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r15s4" height="20" width="16" y="34" x="238" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="241.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r15s3" height="20" width="16" y="50" x="254" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="257.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r15s2" height="20" width="16" y="34" x="270" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="273.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r15s1" height="20" width="16" y="50" x="286" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="289.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="302" y="60" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R15</tspan></text>
+  <!-- R14 -->
+  <rect id="c3r14s6" height="20" width="16" y="94" x="206" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="209.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r14s5" height="20" width="16" y="110" x="222" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="225.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r14s4" height="20" width="16" y="94" x="238" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="241.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r14s3" height="20" width="16" y="110" x="254" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="257.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r14s2" height="20" width="16" y="94" x="270" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="273.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r14s1" height="20" width="16" y="110" x="286" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="289.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="302" y="120" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R14</tspan></text>
+  <!-- R13 -->
+  <rect id="c3r13s6" height="20" width="16" y="154" x="206" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="209.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r13s5" height="20" width="16" y="170" x="222" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="225.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r13s4" height="20" width="16" y="154" x="238" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="241.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r13s3" height="20" width="16" y="170" x="254" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="257.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r13s2" height="20" width="16" y="154" x="270" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="273.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r13s1" height="20" width="16" y="170" x="286" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="289.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="302" y="180" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R13</tspan></text>
+  <!-- R12 -->
+  <rect id="c3r12s6" height="20" width="16" y="214" x="206" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="209.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r12s5" height="20" width="16" y="230" x="222" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="225.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r12s4" height="20" width="16" y="214" x="238" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="241.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r12s3" height="20" width="16" y="230" x="254" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="257.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r12s2" height="20" width="16" y="214" x="270" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="273.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r12s1" height="20" width="16" y="230" x="286" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="289.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="302" y="240" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R12</tspan></text>
+  <!-- R11 -->
+  <rect id="c3r11s6" height="20" width="16" y="274" x="206" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="209.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r11s5" height="20" width="16" y="290" x="222" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="225.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r11s4" height="20" width="16" y="274" x="238" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="241.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r11s3" height="20" width="16" y="290" x="254" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="257.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r11s2" height="20" width="16" y="274" x="270" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="273.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r11s1" height="20" width="16" y="290" x="286" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="289.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="302" y="300" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R11</tspan></text>
+  <!-- R20 -->
+  <rect id="c3r20s6" height="20" width="16" y="34" x="36" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="39.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r20s5" height="20" width="16" y="50" x="52" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="55.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r20s4" height="20" width="16" y="34" x="68" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="71.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r20s3" height="20" width="16" y="50" x="84" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="87.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r20s2" height="20" width="16" y="34" x="100" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="66" x="103.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r20s1" height="20" width="16" y="50" x="116" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="82" x="119.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="132" y="60" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R20</tspan></text>
+  <!-- R19 -->
+  <rect id="c3r19s6" height="20" width="16" y="94" x="36" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="39.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r19s5" height="20" width="16" y="110" x="52" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="55.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r19s4" height="20" width="16" y="94" x="68" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="71.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r19s3" height="20" width="16" y="110" x="84" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="87.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r19s2" height="20" width="16" y="94" x="100" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="126" x="103.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r19s1" height="20" width="16" y="110" x="116" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="142" x="119.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="132" y="120" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R19</tspan></text>
+  <!-- R18 -->
+  <rect id="c3r18s6" height="20" width="16" y="154" x="36" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="39.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r18s5" height="20" width="16" y="170" x="52" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="55.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r18s4" height="20" width="16" y="154" x="68" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="71.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r18s3" height="20" width="16" y="170" x="84" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="87.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r18s2" height="20" width="16" y="154" x="100" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="186" x="103.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r18s1" height="20" width="16" y="170" x="116" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="202" x="119.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="132" y="180" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R18</tspan></text>
+  <!-- R17 -->
+  <rect id="c3r17s6" height="20" width="16" y="214" x="36" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="39.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">6</text>
+  <rect id="c3r17s5" height="20" width="16" y="230" x="52" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="55.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">5</text>
+  <rect id="c3r17s4" height="20" width="16" y="214" x="68" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="71.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r17s3" height="20" width="16" y="230" x="84" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="87.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r17s2" height="20" width="16" y="214" x="100" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="246" x="103.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r17s1" height="20" width="16" y="230" x="116" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="262" x="119.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="132" y="240" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R17</tspan></text>
+  <!-- R16 -->
+  <rect id="c3r16s4" height="20" width="16" y="274" x="68" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="71.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">4</text>
+  <rect id="c3r16s3" height="20" width="16" y="290" x="84" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="87.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">3</text>
+  <rect id="c3r16s2" height="20" width="16" y="274" x="100" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="306" x="103.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">2</text>
+  <rect id="c3r16s1" height="20" width="16" y="290" x="116" stroke="#7f7f7f" fill="${EMPTY}"/>
+  <text y="322" x="119.2" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#b2b2b2">1</text>
+  <text fill="#cccccc" x="132" y="300" font-size="20" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">R16</tspan></text>
+  <text fill="#cccccc" x="250" y="500" font-size="40" font-family="Helvetica,Arial,sans-serif" font-weight="bold"><tspan dx="5">c3</tspan></text>
+</svg>`;
+
   /* ── DOM 생성 ── */
   const overlay = document.createElement('div');
   overlay.id = 'c42-overlay';
@@ -763,11 +1046,13 @@
         <div id="c42-tab-left">
           <button class="c42-tab active" data-cluster="c1">c1</button>
           <button class="c42-tab" data-cluster="c2">c2</button>
+          <button class="c42-tab" data-cluster="c3">c3</button>
         </div>
         <div id="c42-default-bar">
           기본
           <button class="c42-default-btn active" data-cluster="c1">c1</button>
           <button class="c42-default-btn" data-cluster="c2">c2</button>
+          <button class="c42-default-btn" data-cluster="c3">c3</button>
         </div>
       </div>
       <div id="c42-status">불러오는 중…</div>
@@ -777,6 +1062,7 @@
       </div>
       <div class="c42-svg-wrap active" data-cluster="c1">${svgC1}</div>
       <div class="c42-svg-wrap" data-cluster="c2">${svgC2}</div>
+      <div class="c42-svg-wrap" data-cluster="c3">${svgC3}</div>
     </div>`;
   document.body.appendChild(overlay);
 
@@ -832,7 +1118,7 @@
 
   const savedCluster = localStorage.getItem('c42-default-cluster') || 'c1';
   updateDefaultBtns(savedCluster);
-  if (savedCluster === 'c2') switchTab('c2');
+  if (savedCluster !== 'c1') switchTab(savedCluster);
 
   /* ── SVG 이미지 주입 / 제거 ── */
   function clearSeatImages() {
@@ -883,7 +1169,7 @@
     status.textContent = '불러오는 중…';
 
     clearSeatImages();
-    overlay.querySelectorAll('rect[id^="c1r"], rect[id^="c2r"]').forEach(r => r.setAttribute('fill', EMPTY));
+    overlay.querySelectorAll('rect[id^="c1r"], rect[id^="c2r"], rect[id^="c3r"]').forEach(r => r.setAttribute('fill', EMPTY));
 
     GM_xmlhttpRequest({
       method: 'GET',
@@ -891,11 +1177,11 @@
       onload(res) {
         try {
           const data = JSON.parse(res.responseText);
-          const counts = { c1: 0, c2: 0 };
+          const counts = { c1: 0, c2: 0, c3: 0 };
           data.forEach(({ host, login, cdn_uri }) => {
             const rect = overlay.querySelector(`rect#${host}`);
             if (!rect) return;
-            const cluster = host.startsWith('c1') ? 'c1' : 'c2';
+            const cluster = host.startsWith('c1') ? 'c1' : host.startsWith('c2') ? 'c2' : 'c3';
             rect.setAttribute('fill', OCCUPIED);
             if (cdn_uri) {
               const svg = overlay.querySelector(`#c42-svg-${cluster}`);
@@ -904,7 +1190,7 @@
             counts[cluster]++;
           });
           const now = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
-          status.innerHTML = `c1: ${counts.c1}명 &nbsp;·&nbsp; c2: ${counts.c2}명 &nbsp;·&nbsp; ${now} <button id="c42-refresh">새로고침</button>`;
+          status.innerHTML = `c1: ${counts.c1}명 &nbsp;·&nbsp; c2: ${counts.c2}명 &nbsp;·&nbsp; c3: ${counts.c3}명 &nbsp;·&nbsp; ${now} <button id="c42-refresh">새로고침</button>`;
           document.getElementById('c42-refresh').addEventListener('click', loadCluster);
         } catch (e) {
           status.textContent = '파싱 오류: ' + e.message;
