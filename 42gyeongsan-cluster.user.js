@@ -100,7 +100,7 @@
     #c42-tooltip {
       position: fixed; background: rgba(20,20,20,0.93);
       border-radius: 10px; padding: 8px 10px; display: none;
-      z-index: 100000; pointer-events: none;
+      z-index: 100000; pointer-events: auto;
       font-family: Helvetica, Arial, sans-serif;
       box-shadow: 0 4px 20px rgba(0,0,0,0.55);
       text-align: center; min-width: 90px;
@@ -113,7 +113,38 @@
       display: block; color: #fff; font-size: 12px; font-weight: bold;
       margin-top: 6px; white-space: nowrap;
     }
+    #c42-tooltip-star {
+      background: none; border: none; color: #555; font-size: 20px;
+      cursor: pointer; padding: 2px 0 0; display: block;
+      width: 100%; text-align: center; line-height: 1;
+    }
+    #c42-tooltip-star:hover { color: #ffaa00; }
+    #c42-tooltip-star.active { color: #ffaa00; }
     .c42-seat-img { cursor: pointer; }
+
+    #c42-search {
+      width: 100%; box-sizing: border-box; margin-bottom: 10px;
+      background: #2a2a2a; border: 1px solid #444; color: #ccc;
+      border-radius: 6px; padding: 6px 10px; font-size: 14px;
+      font-family: Helvetica, Arial, sans-serif; outline: none;
+    }
+    #c42-search:focus { border-color: #00babc; }
+    #c42-search::placeholder { color: #555; }
+    .c42-seat-found {
+      stroke: #4fc3f7 !important; stroke-width: 2 !important;
+    }
+    .c42-seat-friend {
+      stroke: #ffaa00 !important; stroke-width: 2.5 !important;
+    }
+    @keyframes c42-bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-4px); }
+    }
+    .c42-search-arrow {
+      fill: #4fc3f7; text-anchor: middle; font-size: 12px;
+      font-family: Arial, sans-serif; pointer-events: none;
+      animation: c42-bounce 0.7s ease-in-out infinite;
+    }
 
     #c42-legend {
       display: flex; gap: 16px; margin-bottom: 10px;
@@ -1056,6 +1087,7 @@
         </div>
       </div>
       <div id="c42-status">불러오는 중…</div>
+      <input id="c42-search" type="text" placeholder="동료 검색…" autocomplete="off" spellcheck="false">
       <div id="c42-legend">
         <div class="c42-leg"><div class="c42-dot" style="background:#e5e5e5"></div>빈 자리</div>
         <div class="c42-leg"><div class="c42-dot" style="background:#00babc;border-color:#009fa1"></div>사용 중</div>
@@ -1076,18 +1108,40 @@
   tooltip.id = 'c42-tooltip';
   document.body.appendChild(tooltip);
 
+  let tipHideTimer = null;
+
   function showTip(login, imageUrl) {
+    clearTimeout(tipHideTimer);
+    const isFriend = friends.has(login);
     tooltip.innerHTML = imageUrl
       ? `<img src="${imageUrl}"><span>${login}</span>`
       : `<span>${login}</span>`;
+    const star = document.createElement('button');
+    star.id = 'c42-tooltip-star';
+    star.textContent = isFriend ? '★' : '☆';
+    if (isFriend) star.classList.add('active');
+    star.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleFriend(login);
+      const now = friends.has(login);
+      star.textContent = now ? '★' : '☆';
+      star.classList.toggle('active', now);
+    });
+    tooltip.appendChild(star);
     tooltip.style.display = 'block';
   }
-  function hideTip() { tooltip.style.display = 'none'; }
+
+  function hideTip() {
+    tipHideTimer = setTimeout(() => { tooltip.style.display = 'none'; }, 150);
+  }
+
+  tooltip.addEventListener('mouseenter', () => clearTimeout(tipHideTimer));
+  tooltip.addEventListener('mouseleave', hideTip);
 
   document.addEventListener('mousemove', e => {
-    if (tooltip.style.display !== 'block') return;
+    if (tooltip.style.display !== 'block' || tooltip.matches(':hover')) return;
     let x = e.clientX + 12, y = e.clientY - 28;
-    if (x + 120 > window.innerWidth) x = e.clientX - 120;
+    if (x + 160 > window.innerWidth) x = e.clientX - 160;
     if (y < 4) y = e.clientY + 12;
     tooltip.style.left = x + 'px';
     tooltip.style.top  = y + 'px';
@@ -1169,6 +1223,7 @@
     status.textContent = '불러오는 중…';
 
     clearSeatImages();
+    seatMap.clear();
     overlay.querySelectorAll('rect[id^="c1r"], rect[id^="c2r"], rect[id^="c3r"]').forEach(r => r.setAttribute('fill', EMPTY));
 
     GM_xmlhttpRequest({
@@ -1183,6 +1238,7 @@
             if (!rect) return;
             const cluster = host.startsWith('c1') ? 'c1' : host.startsWith('c2') ? 'c2' : 'c3';
             rect.setAttribute('fill', OCCUPIED);
+            seatMap.set(login, { rect, cluster });
             if (cdn_uri) {
               const svg = overlay.querySelector(`#c42-svg-${cluster}`);
               injectImage(svg, rect, login, cdn_uri);
@@ -1192,6 +1248,8 @@
           const now = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
           status.innerHTML = `c1: ${counts.c1}명 &nbsp;·&nbsp; c2: ${counts.c2}명 &nbsp;·&nbsp; c3: ${counts.c3}명 &nbsp;·&nbsp; ${now} <button id="c42-refresh">새로고침</button>`;
           document.getElementById('c42-refresh').addEventListener('click', loadCluster);
+          applySearch();
+          applyFriends();
         } catch (e) {
           status.textContent = '파싱 오류: ' + e.message;
         }
@@ -1209,17 +1267,17 @@
     loadCluster();
   });
 
-  document.getElementById('c42-close').addEventListener('click', () => {
+  function closePanel() {
     overlay.classList.remove('open');
-    hideTip();
-  });
+    clearTimeout(tipHideTimer);
+    tooltip.style.display = 'none';
+    searchInput.value = '';
+    overlay.querySelectorAll('.c42-seat-found').forEach(el => el.classList.remove('c42-seat-found'));
+    overlay.querySelectorAll('.c42-search-arrow').forEach(el => el.remove());
+  }
 
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) { overlay.classList.remove('open'); hideTip(); }
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { overlay.classList.remove('open'); hideTip(); }
-  });
+  document.getElementById('c42-close').addEventListener('click', closePanel);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closePanel(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 
 })();
