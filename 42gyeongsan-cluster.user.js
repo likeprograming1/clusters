@@ -73,7 +73,6 @@
     #c42-status {
       color: #666; font-size: 15px;
       font-family: Helvetica, Arial, sans-serif;
-      margin-bottom: 10px;
     }
     #c42-refresh {
       background: none; border: 1px solid #444; color: #aaa;
@@ -122,6 +121,26 @@
     #c42-tooltip-star.active { color: #ffaa00; }
     .c42-seat-img { cursor: pointer; }
 
+    #c42-status-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    #c42-mylogin-bar {
+      display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+      font-family: Helvetica, Arial, sans-serif; font-size: 13px; color: #555;
+    }
+    #c42-mylogin-input {
+      width: 110px; background: #2a2a2a; border: 1px solid #444; color: #ccc;
+      border-radius: 4px; padding: 3px 8px; font-size: 13px;
+      font-family: Helvetica, Arial, sans-serif; outline: none;
+    }
+    #c42-mylogin-input:focus { border-color: #4caf50; }
+    #c42-mylogin-save {
+      background: none; border: 1px solid #444; color: #888;
+      border-radius: 4px; padding: 3px 8px; font-size: 13px;
+      cursor: pointer; white-space: nowrap;
+    }
+    #c42-mylogin-save:hover { border-color: #4caf50; color: #4caf50; }
     #c42-search {
       width: 100%; box-sizing: border-box; margin-bottom: 10px;
       background: #2a2a2a; border: 1px solid #444; color: #ccc;
@@ -135,6 +154,16 @@
     }
     .c42-seat-friend {
       stroke: #ffaa00 !important; stroke-width: 2.5 !important;
+    }
+    @keyframes c42-pulse {
+      0%   { transform: scale(1);   opacity: 0.85; }
+      100% { transform: scale(2.8); opacity: 0; }
+    }
+    .c42-my-pulse {
+      fill: none; stroke: #4caf50; stroke-width: 1.5;
+      pointer-events: none;
+      transform-box: fill-box; transform-origin: center;
+      animation: c42-pulse 1.6s ease-out infinite;
     }
     @keyframes c42-bounce {
       0%, 100% { transform: translateY(0); }
@@ -1086,7 +1115,14 @@
           <button class="c42-default-btn" data-cluster="c3">c3</button>
         </div>
       </div>
-      <div id="c42-status">불러오는 중…</div>
+      <div id="c42-status-row">
+        <div id="c42-status">불러오는 중…</div>
+        <div id="c42-mylogin-bar">
+          내 자리
+          <input id="c42-mylogin-input" type="text" placeholder="인트라 로그인" autocomplete="off" spellcheck="false">
+          <button id="c42-mylogin-save">저장</button>
+        </div>
+      </div>
       <input id="c42-search" type="text" placeholder="동료 검색…" autocomplete="off" spellcheck="false">
       <div id="c42-legend">
         <div class="c42-leg"><div class="c42-dot" style="background:#e5e5e5"></div>빈 자리</div>
@@ -1174,6 +1210,92 @@
   updateDefaultBtns(savedCluster);
   if (savedCluster !== 'c1') switchTab(savedCluster);
 
+  /* ── 친구 목록 ── */
+  let friends = new Set(JSON.parse(localStorage.getItem('c42-friends') || '[]'));
+
+  function saveFriends() {
+    localStorage.setItem('c42-friends', JSON.stringify([...friends]));
+  }
+
+  function toggleFriend(login) {
+    if (friends.has(login)) friends.delete(login);
+    else friends.add(login);
+    saveFriends();
+    applyFriends();
+  }
+
+  function applyFriends() {
+    overlay.querySelectorAll('.c42-seat-friend').forEach(el => el.classList.remove('c42-seat-friend'));
+    for (const [login, { rect }] of seatMap) {
+      if (friends.has(login)) rect.classList.add('c42-seat-friend');
+    }
+  }
+
+  /* ── 내 자리 ── */
+  let myLogin = localStorage.getItem('c42-my-login') || null;
+
+  function applyMySeat() {
+    overlay.querySelectorAll('.c42-my-pulse').forEach(el => el.remove());
+    if (!myLogin) return;
+    const entry = seatMap.get(myLogin);
+    if (!entry) return;
+    const { rect, cluster } = entry;
+    const svg = overlay.querySelector(`#c42-svg-${cluster}`);
+    const cx = +rect.getAttribute('x') + +rect.getAttribute('width') / 2;
+    const cy = +rect.getAttribute('y') + +rect.getAttribute('height') / 2;
+    const circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute('cx', cx);
+    circle.setAttribute('cy', cy);
+    circle.setAttribute('r', 10);
+    circle.classList.add('c42-my-pulse');
+    svg.appendChild(circle);
+  }
+
+  const myLoginInput = document.getElementById('c42-mylogin-input');
+  if (myLogin) myLoginInput.value = myLogin;
+
+  document.getElementById('c42-mylogin-save').addEventListener('click', () => {
+    const val = myLoginInput.value.trim();
+    myLogin = val || null;
+    if (myLogin) localStorage.setItem('c42-my-login', myLogin);
+    else localStorage.removeItem('c42-my-login');
+    applyMySeat();
+  });
+
+  myLoginInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('c42-mylogin-save').click();
+  });
+
+  /* ── 동료 검색 ── */
+  let seatMap = new Map(); // login → { rect, cluster }
+
+  const searchInput = document.getElementById('c42-search');
+
+  function applySearch() {
+    overlay.querySelectorAll('.c42-seat-found').forEach(el => el.classList.remove('c42-seat-found'));
+    overlay.querySelectorAll('.c42-search-arrow').forEach(el => el.remove());
+    const q = searchInput.value.trim().toLowerCase();
+    if (!q) return;
+    let firstCluster = null;
+    for (const [login, { rect, cluster }] of seatMap) {
+      if (login.toLowerCase().includes(q)) {
+        rect.classList.add('c42-seat-found');
+        const svg = overlay.querySelector(`#c42-svg-${cluster}`);
+        const arrow = document.createElementNS(NS, 'text');
+        arrow.setAttribute('x', +rect.getAttribute('x') + +rect.getAttribute('width') / 2);
+        arrow.setAttribute('y', +rect.getAttribute('y') - 2);
+        arrow.setAttribute('text-anchor', 'middle');
+        arrow.classList.add('c42-search-arrow');
+        arrow.textContent = '▼';
+        svg.appendChild(arrow);
+        if (!firstCluster) firstCluster = cluster;
+      }
+    }
+    if (firstCluster) switchTab(firstCluster);
+  }
+
+  searchInput.addEventListener('input', applySearch);
+
   /* ── SVG 이미지 주입 / 제거 ── */
   function clearSeatImages() {
     overlay.querySelectorAll('.c42-seat-img').forEach(el => el.remove());
@@ -1250,6 +1372,7 @@
           document.getElementById('c42-refresh').addEventListener('click', loadCluster);
           applySearch();
           applyFriends();
+          applyMySeat();
         } catch (e) {
           status.textContent = '파싱 오류: ' + e.message;
         }
@@ -1274,6 +1397,7 @@
     searchInput.value = '';
     overlay.querySelectorAll('.c42-seat-found').forEach(el => el.classList.remove('c42-seat-found'));
     overlay.querySelectorAll('.c42-search-arrow').forEach(el => el.remove());
+    overlay.querySelectorAll('.c42-my-pulse').forEach(el => el.remove());
   }
 
   document.getElementById('c42-close').addEventListener('click', closePanel);
