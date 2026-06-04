@@ -112,6 +112,9 @@
       display: block; color: #fff; font-size: 12px; font-weight: bold;
       margin-top: 6px; white-space: nowrap;
     }
+    #c42-tooltip a { text-decoration: none; display: block; }
+    #c42-tooltip a:hover img { opacity: 0.82; }
+    #c42-tooltip a:hover span { color: #00babc; }
     #c42-tooltip-star {
       background: none; border: none; color: #555; font-size: 20px;
       cursor: pointer; padding: 2px 0 0; display: block;
@@ -1144,16 +1147,26 @@
   tooltip.id = 'c42-tooltip';
   document.body.appendChild(tooltip);
 
-  let tipHideTimer = null;
+  let tipOpenLogin = null;
 
-  function showTip(login, imageUrl) {
-    clearTimeout(tipHideTimer);
-    const isFriend = friends.has(login);
-    tooltip.innerHTML = imageUrl
-      ? `<img src="${imageUrl}"><span>${login}</span>`
-      : `<span>${login}</span>`;
+  function showTip(login, imageUrl, x, y) {
+    tooltip.innerHTML = '';
+    const link = document.createElement('a');
+    link.href = `https://profile-v3.intra.42.fr/users/${login}`;
+    link.target = '_blank';
+    if (imageUrl) {
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      link.appendChild(img);
+    }
+    const span = document.createElement('span');
+    span.textContent = login;
+    link.appendChild(span);
+    tooltip.appendChild(link);
+
     const star = document.createElement('button');
     star.id = 'c42-tooltip-star';
+    const isFriend = friends.has(login);
     star.textContent = isFriend ? '★' : '☆';
     if (isFriend) star.classList.add('active');
     star.addEventListener('click', e => {
@@ -1164,30 +1177,23 @@
       star.classList.toggle('active', now);
     });
     tooltip.appendChild(star);
-    tooltip.style.display = 'block';
-  }
 
-  function hideTip() {
-    tipHideTimer = setTimeout(() => { tooltip.style.display = 'none'; }, 150);
-  }
-
-  tooltip.addEventListener('mouseenter', () => clearTimeout(tipHideTimer));
-  tooltip.addEventListener('mouseleave', hideTip);
-
-  document.addEventListener('mousemove', e => {
-    if (tooltip.style.display !== 'block' || tooltip.matches(':hover')) return;
-    let x = e.clientX + 12, y = e.clientY - 28;
-    if (x + 160 > window.innerWidth) x = e.clientX - 160;
-    if (y < 4) y = e.clientY + 12;
     tooltip.style.left = x + 'px';
     tooltip.style.top  = y + 'px';
-  });
+    tooltip.style.display = 'block';
+    tipOpenLogin = login;
+  }
+
+  function closeTip() {
+    tooltip.style.display = 'none';
+    tipOpenLogin = null;
+  }
 
   /* ── 탭 전환 ── */
   function switchTab(cluster) {
     overlay.querySelectorAll('.c42-tab').forEach(t => t.classList.toggle('active', t.dataset.cluster === cluster));
     overlay.querySelectorAll('.c42-svg-wrap').forEach(w => w.classList.toggle('active', w.dataset.cluster === cluster));
-    hideTip();
+    closeTip();
   }
 
   overlay.querySelectorAll('.c42-tab').forEach(tab => {
@@ -1331,10 +1337,13 @@
     img.setAttribute('clip-path', `url(#${clipId})`);
     img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
     img.classList.add('c42-seat-img');
-    img.addEventListener('mouseenter', () => showTip(login, imageUrl));
-    img.addEventListener('mouseleave', hideTip);
-    img.addEventListener('click', () => {
-      window.open(`https://profile-v3.intra.42.fr/users/${login}`, '_blank');
+    img.addEventListener('click', e => {
+      e.stopPropagation();
+      if (tipOpenLogin === login) { closeTip(); return; }
+      let px = e.clientX + 12, py = e.clientY - 28;
+      if (px + 160 > window.innerWidth) px = e.clientX - 160;
+      if (py < 4) py = e.clientY + 12;
+      showTip(login, imageUrl, px, py);
     });
     rect.after(img);
   }
@@ -1392,16 +1401,23 @@
 
   function closePanel() {
     overlay.classList.remove('open');
-    clearTimeout(tipHideTimer);
-    tooltip.style.display = 'none';
+    closeTip();
     searchInput.value = '';
     overlay.querySelectorAll('.c42-seat-found').forEach(el => el.classList.remove('c42-seat-found'));
     overlay.querySelectorAll('.c42-search-arrow').forEach(el => el.remove());
     overlay.querySelectorAll('.c42-my-pulse').forEach(el => el.remove());
   }
 
+  document.getElementById('c42-panel').addEventListener('click', e => {
+    if (tipOpenLogin && !tooltip.contains(e.target) && !e.target.closest('.c42-seat-img')) {
+      closeTip();
+    }
+  });
+
   document.getElementById('c42-close').addEventListener('click', closePanel);
   overlay.addEventListener('click', e => { if (e.target === overlay) closePanel(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { if (tipOpenLogin) { closeTip(); } else { closePanel(); } }
+  });
 
 })();
