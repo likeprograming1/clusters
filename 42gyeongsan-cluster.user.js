@@ -43,6 +43,11 @@
       padding: 20px 20px 16px; position: relative;
       max-width: 95vw; max-height: 95vh; overflow: auto;
     }
+    #c42-panel-inside {
+      position: fixed;
+      max-width: 92vw;
+      width: 100%;
+    }
     #c42-header {
       display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
     }
@@ -94,7 +99,7 @@
     .c42-default-btn.active { background: #00babc22; border-color: #00babc; color: #00babc; font-weight: bold; }
 
     .c42-svg-wrap { display: none; }
-    .c42-svg-wrap.active { display: block; }
+    .c42-svg-wrap.active { display: block; margin-top:10vw;}
 
     #c42-tooltip {
       position: fixed; background: rgba(20,20,20,0.93);
@@ -1098,39 +1103,41 @@
   overlay.id = 'c42-overlay';
   overlay.innerHTML = `
     <div id="c42-panel">
-      <button id="c42-close">✕</button>
-      <div id="c42-header">
-        <h2>42 경산 클러스터 배치도</h2>
-      </div>
-      <div id="c42-tabs">
-        <div id="c42-tab-left">
-          <button class="c42-tab active" data-cluster="c1">c1</button>
-          <button class="c42-tab" data-cluster="c2">c2</button>
-          <button class="c42-tab" data-cluster="c3">c3</button>
-        </div>
-        <div id="c42-default-bar">
-          기본
-          <button class="c42-default-btn active" data-cluster="c1">c1</button>
-          <button class="c42-default-btn" data-cluster="c2">c2</button>
-          <button class="c42-default-btn" data-cluster="c3">c3</button>
-        </div>
-      </div>
-      <div id="c42-status-row">
-        <div id="c42-status">불러오는 중…</div>
-        <div id="c42-mylogin-bar">
-          내 자리
-          <input id="c42-mylogin-input" type="text" placeholder="인트라 로그인" autocomplete="off" spellcheck="false">
-          <button id="c42-mylogin-save">저장</button>
-        </div>
-      </div>
-      <input id="c42-search" type="text" placeholder="동료 검색…" autocomplete="off" spellcheck="false">
-      <div id="c42-legend">
-        <div class="c42-leg"><div class="c42-dot" style="background:#e5e5e5"></div>빈 자리</div>
-        <div class="c42-leg"><div class="c42-dot" style="background:#00babc;border-color:#009fa1"></div>사용 중</div>
-      </div>
-      <div class="c42-svg-wrap active" data-cluster="c1">${svgC1}</div>
-      <div class="c42-svg-wrap" data-cluster="c2">${svgC2}</div>
-      <div class="c42-svg-wrap" data-cluster="c3">${svgC3}</div>
+	  <div id= "c42-panel-inside">
+		<button id="c42-close">✕</button>
+		<div id="c42-header">
+			<h2>42 경산 클러스터 배치도</h2>
+		</div>
+		<div id="c42-tabs">
+			<div id="c42-tab-left">
+			<button class="c42-tab active" data-cluster="c1">c1</button>
+			<button class="c42-tab" data-cluster="c2">c2</button>
+			<button class="c42-tab" data-cluster="c3">c3</button>
+			</div>
+			<div id="c42-default-bar">
+			기본
+			<button class="c42-default-btn active" data-cluster="c1">c1</button>
+			<button class="c42-default-btn" data-cluster="c2">c2</button>
+			<button class="c42-default-btn" data-cluster="c3">c3</button>
+			</div>
+		</div>
+		<div id="c42-status-row">
+			<div id="c42-status">불러오는 중…</div>
+			<div id="c42-mylogin-bar">
+			내 자리
+			<input id="c42-mylogin-input" type="text" placeholder="인트라 로그인" autocomplete="off" spellcheck="false">
+			<button id="c42-mylogin-save">저장</button>
+			</div>
+		</div>
+		<input id="c42-search" type="text" placeholder="동료 검색…" autocomplete="off" spellcheck="false">
+		<div id="c42-legend">
+			<div class="c42-leg"><div class="c42-dot" style="background:#e5e5e5"></div>빈 자리</div>
+			<div class="c42-leg"><div class="c42-dot" style="background:#00babc;border-color:#009fa1"></div>사용 중</div>
+		</div>
+	  </div>
+	  <div class="c42-svg-wrap active" data-cluster="c1">${svgC1}</div>
+	  <div class="c42-svg-wrap" data-cluster="c2">${svgC2}</div>
+	  <div class="c42-svg-wrap" data-cluster="c3">${svgC3}</div>
     </div>`;
   document.body.appendChild(overlay);
 
@@ -1146,8 +1153,18 @@
 
   let tipHideTimer = null;
 
-  function showTip(login, imageUrl) {
-    clearTimeout(tipHideTimer);
+  function showTip(e, login, imageUrl) {
+    if (tipHideTimer) clearTimeout(tipHideTimer);
+
+    let x = e.clientX + 4;
+    let y = e.clientY - 35;
+
+    if (x + 160 > window.innerWidth) x = e.clientX - 164;
+    if (y < 4) y = e.clientY + 15;
+
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+    tooltip.style.display = 'block';
     const isFriend = friends.has(login);
     tooltip.innerHTML = imageUrl
       ? `<img src="${imageUrl}"><span>${login}</span>`
@@ -1171,16 +1188,31 @@
     tipHideTimer = setTimeout(() => { tooltip.style.display = 'none'; }, 150);
   }
 
-  tooltip.addEventListener('mouseenter', () => clearTimeout(tipHideTimer));
-  tooltip.addEventListener('mouseleave', hideTip);
+// [수정] 툴팁 내부에 마우스가 있는지 체크하는 상태 변수
+  let isMouseInsideTooltip = false;
 
-  document.addEventListener('mousemove', e => {
-    if (tooltip.style.display !== 'block' || tooltip.matches(':hover')) return;
-    let x = e.clientX + 12, y = e.clientY - 28;
-    if (x + 160 > window.innerWidth) x = e.clientX - 160;
-    if (y < 4) y = e.clientY + 12;
-    tooltip.style.left = x + 'px';
-    tooltip.style.top  = y + 'px';
+  tooltip.addEventListener('mouseenter', () => {
+    clearTimeout(tipHideTimer);
+  });
+
+  tooltip.addEventListener('mouseleave', () => {
+    hideTip();
+  });
+
+  document.addEventListener('mouseover', e => {
+    if (isMouseInsideTooltip || tooltip.matches(':hover')) return;
+    if (tooltip.style.display !== 'block') return;
+
+    if (!isMouseInsideTooltip)
+    {
+      let x = e.clientX + 4, y = e.clientY - 35;
+
+      if (x + 160 > window.innerWidth) x = e.clientX - 164;
+      if (y < 4) y = e.clientY + 15;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = y + 'px';
+      isMouseInsideTooltip = true;
+    }
   });
 
   /* ── 탭 전환 ── */
@@ -1331,7 +1363,7 @@
     img.setAttribute('clip-path', `url(#${clipId})`);
     img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
     img.classList.add('c42-seat-img');
-    img.addEventListener('mouseenter', () => showTip(login, imageUrl));
+    img.addEventListener('mouseenter', (e) => showTip(e, login, imageUrl));
     img.addEventListener('mouseleave', hideTip);
     img.addEventListener('click', () => {
       window.open(`https://profile-v3.intra.42.fr/users/${login}`, '_blank');
